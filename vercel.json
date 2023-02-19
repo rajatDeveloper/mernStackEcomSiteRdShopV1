@@ -2,5 +2,5 @@
   "version": 2,
   "name": "ecom rd shop",
   "builds": [{ "src": "backend/server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
+  "routes": [{ "src": "/(.*)", "dest": "backend/server.js" }]
 }
