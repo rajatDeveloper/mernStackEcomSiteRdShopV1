@@ -20,7 +20,7 @@ import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useHistory } from "react-router-dom";
 import { createOrder, clearErrors } from "../../actions/orderAction";
 
-
+const urlMain = "http://localhost:4000";
 const Payment = () => {
     const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
@@ -43,10 +43,11 @@ const Payment = () => {
         try {
             const config = {
                 headers: {
-                    "Content-type": "application/json"
-                }
+                    "Content-type": "application/json",
+                },
+                withCredentials: true
             }
-            const { data } = await axios.post("/api/v1/payment/process",
+            const { data } = await axios.post(`${urlMain}/api/v1/payment/process`,
                 paymentData,
                 config
 

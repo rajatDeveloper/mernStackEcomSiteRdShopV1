@@ -46,9 +46,11 @@ function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   const [stripeApiKey, setStripeApiKey] = useState("");
-  const urlMain = "https://9pq52n-4000.csb.app";
+  const urlMain = "http://localhost:4000";
   async function getStripeApiKey() {
-    const { data } = await axios.get(`${urlMain}/api/v1/stripeapikey`);
+    const { data } = await axios.get(`${urlMain}/api/v1/stripeapikey`, {
+      withCredentials: true,
+    });
     setStripeApiKey(data.stripeApiKey);
   }
 
@@ -63,7 +65,7 @@ function App() {
     getStripeApiKey();
   }, []);
 
-  window.addEventListener("contextmenu", (e) => e.preventDefault());
+  // window.addEventListener("contextmenu", (e) => e.preventDefault());
 
   return (
     <Router>

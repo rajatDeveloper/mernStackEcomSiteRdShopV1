@@ -23,7 +23,8 @@ import {
 } from "../constants/orderConstants";
 
 import axios from "axios";
-const urlMain = "https://9pq52n-4000.csb.app";
+const urlMain = "http://localhost:4000";
+
 export const createOrder = (order) => async (dispatch) => {
   try {
     dispatch({
@@ -59,8 +60,11 @@ export const myOrders = () => async (dispatch) => {
     dispatch({
       type: MY_ORDERS_REQUEST,
     });
+    const config = {
+      withCredentials: true,
+    }
 
-    const { data } = await axios.get(`${urlMain}/api/v1/orders/me`);
+    const { data } = await axios.get(`${urlMain}/api/v1/orders/me`,config);
     dispatch({
       type: MY_ORDERS_SUCCESS,
       payload: data.orders,
@@ -78,8 +82,10 @@ export const getAllOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`${urlMain}/api/v1/admin/orders`);
-
+    const { data } = await axios.get(`${urlMain}/api/v1/admin/orders`,config);
+    const config = {
+      withCredentials: true,
+    }
     dispatch({ type: ALL_ORDERS_SUCCESS, payload: data.orders });
   } catch (error) {
     dispatch({
@@ -97,7 +103,9 @@ export const updateOrder = (id, order) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+
       },
+      withCredentials: true,
     };
     const { data } = await axios.put(
       `${urlMain}/api/v1/admin/order/${id}`,
@@ -118,8 +126,11 @@ export const updateOrder = (id, order) => async (dispatch) => {
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
+    const config = {
+      withCredentials: true,
+    }
 
-    const { data } = await axios.delete(`${urlMain}/api/v1/admin/order/${id}`);
+    const { data } = await axios.delete(`${urlMain}/api/v1/admin/order/${id}`,config);
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
@@ -136,8 +147,11 @@ export const getOrderDetails = (id) => async (dispatch) => {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
     });
+    const config = {
+      withCredentials: true,
+    }
 
-    const { data } = await axios.get(`${urlMain}/api/v1/order/${id}`);
+    const { data } = await axios.get(`${urlMain}/api/v1/order/${id}`,config);
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
       payload: data.order,

@@ -5,11 +5,14 @@ import {
 } from "../constants/cartConstants";
 
 import axios from "axios";
-const urlMain = "https://9pq52n-4000.csb.app";
+const urlMain = "http://localhost:4000";
+const config = {
+  withCredentials: true,
+}
 
 // add to cart
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-  const { data } = await axios.get(`${urlMain}/api/v1/product/${id}`);
+  const { data } = await axios.get(`${urlMain}/api/v1/product/${id}`,config);
 
   // console.log(data)
   dispatch({

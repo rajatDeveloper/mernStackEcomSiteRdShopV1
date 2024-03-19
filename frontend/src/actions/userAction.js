@@ -40,12 +40,13 @@ import {
   USER_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
+import axios from "axios";
+const cookieJs = require("cookiejs");
 
 //   "proxy": "http://192.168.29.79:4000"
 
 // login
-import axios from "axios";
-const urlMain = "https://9pq52n-4000.csb.app";
+const urlMain = "http://localhost:4000";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -56,6 +57,7 @@ export const login = (email, password) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        withCredentials: true,
       },
     };
 
@@ -65,7 +67,9 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
-    // console.log(data)
+    console.log(data, "the data is ");
+    cookieJs.set("token", data?.token);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data.user,
@@ -86,7 +90,9 @@ export const register = (userData) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        withCredentials: true,
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.post(
@@ -114,7 +120,9 @@ export const loadUser = () => async (dispatch) => {
       type: LOAD_USER_REQUEST,
     });
 
-    const { data } = await axios.get(`${urlMain}/api/v1/me`);
+    const { data } = await axios.get(`${urlMain}/api/v1/me`, {
+      withCredentials: true,
+    });
 
     // console.log(data)
     dispatch({
@@ -152,7 +160,9 @@ export const upadteProfile = (userData) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        withCredentials: true,
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(
@@ -181,6 +191,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        withCredentials: true,
       },
     };
 
@@ -212,6 +223,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        withCredentials: true,
       },
     };
 
@@ -243,6 +255,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
     const config = {
       headers: {
+        withCredentials: true,
         "Content-Type": "application/json",
       },
     };
@@ -295,7 +308,10 @@ export const updateUser = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
 
     const { data } = await axios.put(
       `/api/v1/admin/user/${id}`,

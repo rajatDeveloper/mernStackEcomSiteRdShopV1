@@ -4,6 +4,7 @@ import { Redirect, Route } from "react-router-dom"
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
   var data = useSelector((state => state.user));
+  console.log(data,'the data a')
   var loading = data.loading;
   var user = data.user;
   var isAuthenticated = data.isAuthenticated;
